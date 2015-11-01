@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -57,7 +58,7 @@ public class PropertiesFileWrapper {
     
     public List<List<Property>> findDuplicatedEntries() {
         List<List<Property>> list = new LinkedList<>();
-        Map<String, List<Property>> map = new HashMap<>();
+        Map<String, List<Property>> map = new LinkedHashMap<>();
         for (Property property : propertyList) {
             String name = property.getName();
             if (!map.containsKey(name)) {
@@ -65,9 +66,9 @@ public class PropertiesFileWrapper {
             }
             map.get(name).add(property);
         }
-        for (List<Property> l : map.values()) {
-            if (1 < l.size()) {
-                list.add(l);
+        for (List<Property> childList : map.values()) {
+            if (1 < childList.size()) {
+                list.add(childList);
             }
         }
         return list;
